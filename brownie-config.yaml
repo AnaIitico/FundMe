@@ -12,14 +12,16 @@ token:
   decimals: ${DECIMALS} 
   mint_cost: ${MINT_COST} 
   max_supply: ${MAX_SUPPLY} 
+  ipfs_image_metadata_cid: ${IPFS_IMAGE_METADATA_CID} 
+  ipfs_hidden_image_metadata_cid: ${IPFS_HIDDEN_IMAGE_METADATA_CID} 
 dependencies:
   - OpenZeppelin/openzeppelin-contracts@2.5.0
   - OpenZeppelin/openzeppelin-contracts@4.4.1
-compiler:
-    solc:
-        remappings:
-          - "@openzeppelin=OpenZeppelin/openzeppelin-contracts@2.5.0"
-          - "@openzeppelin=OpenZeppelin/openzeppelin-contracts@4.4.1"
+# compiler:
+#     solc:
+#         remappings:
+#           - "@openzeppelin=OpenZeppelin/openzeppelin-contracts@2.5.0"
+#           - "@openzeppelin=OpenZeppelin/openzeppelin-contracts@4.4.1"
 networks:
   default: development
   development:

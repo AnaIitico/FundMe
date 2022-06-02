@@ -1,11 +1,10 @@
 
-from brownie import FundMe, accounts, config
+from brownie import FundMePunks, accounts, config
 
 
 def read_contract():
-    contract = FundMe[-1]
+    contract = FundMePunks
     print(contract.address)
-    print(contract.retrieve())
 
 
 def main():
