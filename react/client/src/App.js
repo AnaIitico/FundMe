@@ -1,5 +1,4 @@
 
-// import React from 'react';
 import React, { useState, useEffect } from 'react'
 import { Row, Col, Spinner } from 'react-bootstrap'
 import Countdown from 'react-countdown'
