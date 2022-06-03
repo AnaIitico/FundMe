@@ -1,4 +1,3 @@
-
 export const getEthereum = async () => {
 
     // event listener is not reliable
@@ -7,4 +6,5 @@ export const getEthereum = async () => {
     }
 
     return window.ethereum
+
 }
