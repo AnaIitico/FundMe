@@ -47,12 +47,13 @@ function App() {
 		// Fetch Contract, Data, etc.
 		try {
 			let chain = (_networkId === 1337) ? "dev" : _networkId;
-			let address;
+			let contract_address;
 			let contractArtifact
 
 			try {
 				let map = await import(`./artifacts/deployments/map.json`)
-				address = map[chain]["FundMePunks"][0]
+				
+				contract_address = map[chain]["FundMePunks"][0]
 			} catch (e) {
 				console.log(`Couldn't find any deployed contract "FundMePunks" on the chain "${chain}".`)
 				setIsError(true)
@@ -61,16 +62,16 @@ function App() {
 			}
 
 			try {
-				contractArtifact = await import(`./artifacts/deployments/${chain}/${address}.json`)
+				contractArtifact = await import(`./artifacts/deployments/${chain}/${contract_address}.json`)
 			} catch (e) {
-				console.log(`Failed to load contract artifact "./artifacts/deployments/${chain}/${address}.json"`)
+				console.log(`Failed to load contract artifact "./artifacts/deployments/${chain}/${contract_address}.json"`)
 				setIsError(true)
 				setMessage("Contract initiation could not find artifact");
 				return;	
 			}
 			console.log(">> artifact:", contractArtifact);
 
-			const contract = new _web3.eth.Contract(contractArtifact.abi, address)
+			const contract = new _web3.eth.Contract(contractArtifact.abi, contract_address)
 			console.log(">>> CONTRACT:::", contract);
 			setContract(contract)
 
