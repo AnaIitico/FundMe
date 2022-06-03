@@ -29,3 +29,6 @@ __pycache__
 .hypothesis/
 build/
 reports/
+
+react/client/node_modules
+react/client/src/artifacts
