@@ -163,7 +163,7 @@ function App() {
 	// 		return
 	// 	}
 
-		if (ownerOf.length > 5) {
+		if (ownerOf.length > 25) {
 			window.alert("You've reached the max of 5 NFT's.\Thank you for your Donations!")
 			return
 		}
@@ -185,6 +185,7 @@ function App() {
 				})
 				.on('error', (error) => {
 					window.alert(error)
+					console.log(">>> ERROR:::", error);
 					setIsError(true)
 				})
 		}
