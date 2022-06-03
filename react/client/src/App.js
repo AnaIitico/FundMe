@@ -71,7 +71,7 @@ function App() {
 			}
 			console.log(">> artifact:", contractArtifact);
 
-			const contract = new _web3.eth.Contract(contractArtifact.abi, contract_address)
+			let contract = new _web3.eth.Contract(contractArtifact.abi, contract_address)
 			console.log(">>> CONTRACT:::", contract);
 			setContract(contract)
 
