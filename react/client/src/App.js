@@ -1,5 +1,4 @@
 
-// import React from 'react';
 import React, { useState, useEffect } from 'react'
 import { Row, Col, Spinner } from 'react-bootstrap'
 import Countdown from 'react-countdown'
@@ -18,6 +17,7 @@ import Navbar from './Navbar'
 // Import ABI + Config
 import contract from './artifacts/contracts/FundMePunks.json'
 import config from './config.json'
+
 if(contract) console.log(contract);
 
 function App() {
@@ -72,6 +72,7 @@ function App() {
 			console.log(">> artifact:", contractArtifact);
 
 			const contract = new _web3.eth.Contract(contractArtifact.abi, contract_address)
+
 			console.log(">>> CONTRACT:::", contract);
 			setContract(contract)
 
@@ -103,7 +104,7 @@ function App() {
 
 	const loadWeb3 = async () => {
 		if (typeof window.ethereum !== 'undefined') {
-			const web3 = new Web3(window.ethereum)
+			let web3 = new Web3(window.ethereum)
 			setWeb3(web3)
 
 			const accounts = await web3.eth.getAccounts()
@@ -124,7 +125,7 @@ function App() {
 			setNetworkId(networkId)
 
 			if (networkId !== 1337) {
-                const provider = new Web3.providers.HttpProvider(
+                let provider = new Web3.providers.HttpProvider(
                     "http://127.0.0.1:8545"
                 );
                 web3 = new Web3(provider)
@@ -163,8 +164,9 @@ function App() {
 	// 		return
 	// 	}
 
-		if (ownerOf.length > 25) {
-			window.alert("You've reached the max of 5 NFT's.\Thank you for your Donations!")
+
+		if (ownerOf.length > 150) {
+			window.alert("You've reached the max of 150 NFT's.\Thank you for your Donations!")
 			return
 		}
 

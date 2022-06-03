@@ -1631,7 +1631,7 @@ contract FundMePunks is ERC721Enumerable, Ownable {
     string public baseExtension = ".json";
     uint256 public cost;
     uint256 public maxSupply;
-    uint256 public maxMintAmount = 5;
+    uint256 public maxMintAmount = 150;
     bool public isRevealed = true;
     string public notRevealedUri;
 
@@ -1659,7 +1659,7 @@ contract FundMePunks is ERC721Enumerable, Ownable {
     // public
     function mint(uint256 _mintAmount) public payable {
         
-        require(balanceOf(msg.sender) == 5, "Only 5 mint per account");
+        require(balanceOf(msg.sender) < 150, "Only 150 mint per account");
         // require(cost >= 25 * 10**10);//convert to 18 decimals
 
         uint256 supply = totalSupply();
