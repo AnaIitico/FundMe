@@ -1,7 +1,7 @@
 
 ## REACT: change the build directory to be within react's scope
-# project_structure:
-#    build: client/src/artifacts
+project_structure:
+   build: react/client/src/artifacts
 
 # automatically fetch contract sources from Etherscan
 autofetch_sources: True
