@@ -71,7 +71,8 @@ function App() {
 			}
 			console.log(">> artifact:", contractArtifact);
 
-			let contract = new _web3.eth.Contract(contractArtifact.abi, contract_address)
+			const contract = new _web3.eth.Contract(contractArtifact.abi, contract_address)
+
 			console.log(">>> CONTRACT:::", contract);
 			setContract(contract)
 
@@ -163,6 +164,7 @@ function App() {
 	// 		return
 	// 	}
 
+
 		if (ownerOf.length > 150) {
 			window.alert("You've reached the max of 150 NFT's.\Thank you for your Donations!")
 			return
@@ -185,6 +187,7 @@ function App() {
 				})
 				.on('error', (error) => {
 					window.alert(error)
+					console.log(">>> ERROR:::", error);
 					setIsError(true)
 				})
 		}
