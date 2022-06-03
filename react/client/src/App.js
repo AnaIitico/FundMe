@@ -46,10 +46,38 @@ function App() {
 	const loadBlockchainData = async (_web3, _account, _networkId) => {
 		// Fetch Contract, Data, etc.
 		try {
-			const contract = new _web3.eth.Contract(contract.abi, contract.networks[_networkId].address)
+			let chain = (_networkId === 1337) ? "dev" : _networkId;
+			let address;
+			let contractArtifact
+
+			try {
+				let map = await import(`./artifacts/deployments/map.json`)
+				address = map[chain]["FundMePunks"][0]
+			} catch (e) {
+				console.log(`Couldn't find any deployed contract "FundMePunks" on the chain "${chain}".`)
+				setIsError(true)
+				setMessage("Contract initiation could not find map.json");
+				return;	
+			}
+
+			try {
+				contractArtifact = await import(`./artifacts/deployments/${chain}/${address}.json`)
+			} catch (e) {
+				console.log(`Failed to load contract artifact "./artifacts/deployments/${chain}/${address}.json"`)
+				setIsError(true)
+				setMessage("Contract initiation could not find artifact");
+				return;	
+			}
+			console.log(">> artifact:", contractArtifact);
+
+			const contract = new _web3.eth.Contract(contractArtifact.abi, address)
+			console.log(">>> CONTRACT:::", contract);
 			setContract(contract)
 
 			const maxSupply = await contract.methods.maxSupply().call()
+
+			console.log("MAx supply: ", maxSupply);
+
 			const totalSupply = await contract.methods.totalSupply().call()
 			setSupplyAvailable(maxSupply - totalSupply)
 
@@ -66,6 +94,7 @@ function App() {
 			}
 
 		} catch (error) {
+			console.log("loadBlockchainData error:", error);
 			setIsError(true)
 			setMessage("Contract not deployed to current network, please change network in MetaMask")
 		}
@@ -90,7 +119,7 @@ function App() {
             if (networkId < 2) {
                 console.log("MainNet Is Not Supported!") 
                 return
-            }
+            } 
 			setNetworkId(networkId)
 
 			if (networkId !== 1337) {
@@ -237,7 +266,7 @@ function App() {
 						</Col>
 						<Col md={5} lg={4} xl={5} xxl={4}>
 							{isError ? (
-								<p>{message}</p>
+								<p>Error: {message}</p>
 							) : (
 								<div>
 									<h3>Donate & Mint your NFT in</h3>
