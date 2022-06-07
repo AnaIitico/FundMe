@@ -178,15 +178,9 @@ function App() {
 			setIsMinting(true)
 			setIsError(false)
 
-<<<<<<< HEAD
-            let value = donation;
-			console.log(">>> VALUE:::", value);
-			await contract.methods.mint(1).send({ from: account, value: value * 10 ** 18 })
-=======
 			const _value = web3.utils.toWei(donation, 'ether');
 			// console.log(">>> VALUE:::", _value);
 			await contract.methods.mint(1).send({ from: account, value: _value })
->>>>>>> main
 				.on('confirmation', async () => {
 					const maxSupply = await contract.methods.maxSupply().call()
 					const totalSupply = await contract.methods.totalSupply().call()
