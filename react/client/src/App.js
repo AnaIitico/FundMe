@@ -27,6 +27,7 @@ function App() {
 	const [supplyAvailable, setSupplyAvailable] = useState(0)
 
 	const [account, setAccount] = useState(null)
+
 	const [donation, setDonation] = useState('0')
 
 	const [networkId, setNetworkId] = useState(null)
@@ -177,9 +178,15 @@ function App() {
 			setIsMinting(true)
 			setIsError(false)
 
+<<<<<<< HEAD
+            let value = donation;
+			console.log(">>> VALUE:::", value);
+			await contract.methods.mint(1).send({ from: account, value: value * 10 ** 18 })
+=======
 			const _value = web3.utils.toWei(donation, 'ether');
 			// console.log(">>> VALUE:::", _value);
 			await contract.methods.mint(1).send({ from: account, value: _value })
+>>>>>>> main
 				.on('confirmation', async () => {
 					const maxSupply = await contract.methods.maxSupply().call()
 					const totalSupply = await contract.methods.totalSupply().call()
@@ -287,8 +294,8 @@ function App() {
 									{isMinting ? (	
 										<Spinner animation="border" className='p-3 m-2' />
 									) : (<div>
-										Donation amount:&nbsp;<input style={{"width": "100px"}}className="input" onChange={e => { setDonation(e.currentTarget.value) }}/><br/>
-										<button onClick={mintNFTHandler} className='button mint-button mt-3'>Mint</button>
+										Donation amount:&nbsp;<input style={{"width": "100px"}} className="input" placeholder='In Ether'  onChange={e => { setDonation(e.currentTarget.value) }}/><br/>
+										<button onClick={mintNFTHandler} className='button mint-button mt-3' disabled={donation == 0}>Mint</button>
 										</div>
 									)}
 
