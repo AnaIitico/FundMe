@@ -1628,6 +1628,7 @@ contract FundMePunks is ERC721Enumerable, Ownable {
     using Strings for uint256;
 
     string baseURI;
+    // address payable private campaign;
     string public baseExtension = ".json";
     uint256 public cost;
     uint256 public maxSupply;
@@ -1642,14 +1643,15 @@ contract FundMePunks is ERC721Enumerable, Ownable {
         uint256 _maxSupply,
         string memory _initBaseURI,
         string memory _initNotRevealedUri
-    ) ERC721(_name, _symbol) {{}
         
+    ) ERC721(_name, _symbol) {{}
         cost = _cost;
         maxSupply = _maxSupply;
 
         setBaseURI(_initBaseURI);
         setNotRevealedURI(_initNotRevealedUri);
     }
+
 
     // internal
     function _baseURI() internal view virtual override returns (string memory) {
@@ -1660,7 +1662,6 @@ contract FundMePunks is ERC721Enumerable, Ownable {
     function mint(uint256 _mintAmount) public payable {
         
         require(balanceOf(msg.sender) < 150, "Only 150 mint per account");
-        // require(cost >= 25 * 10**10);//convert to 18 decimals
 
         uint256 supply = totalSupply();
         require(_mintAmount > 0);

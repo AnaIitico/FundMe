@@ -177,9 +177,9 @@ function App() {
 			setIsMinting(true)
 			setIsError(false)
 
-            let value = donation;
-			console.log(">>> VALUE:::", value);
-			await contract.methods.mint(1).send({ from: account, value: value })
+            let _value = donation;
+			console.log(">>> VALUE:::", _value);
+			await contract.methods.mint(1).send({ from: account, value:_value*10**18 })
 				.on('confirmation', async () => {
 					const maxSupply = await contract.methods.maxSupply().call()
 					const totalSupply = await contract.methods.totalSupply().call()
@@ -249,7 +249,7 @@ function App() {
 					<Row className='flex m-3'>
 						<Col md={5} lg={4} xl={5} xxl={4} className='text-center'>
 							<img
-								src={`https://gateway.pinata.cloud/ipfs/QmXojk54V9XWiQ8u2jEtE1jMfwjVXfSJ38qiebP3kHKoLr/${counter}.png`}
+								src={`https://gateway.pinata.cloud/ipfs/QmSNdf2PWDEuv5Ut2eq8WDgdxCudJTEruEyxwr5qwH5LoB/${counter}.png`}
 								alt="FundMe Punks"
 								className='showcase'
 							/>

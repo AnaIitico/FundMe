@@ -15,10 +15,10 @@ def deploy_contract():
     contract = FundMePunks.deploy(
         config['token']['name'],
         config['token']['symbol'],
-        0.025, # The minimum donation value for the NFT
+        float(config['token']['mint_cost'])*10**18, # The minimum donation value for the NFT
         config['token']['max_supply'],
-        config['token']['ipfs_image_metadata_cid'],
-        config['token']['ipfs_hidden_image_metadata_cid'],
+        config['token']['ipfs_image_metadata_cid'],# ipfs hash for image metadata
+        config['token']['ipfs_hidden_image_data_cid'],# ipfs hash for the actual image
         {"from": account}, publish_source=config["networks"][network.show_active()].get("verify")#will only verify outside of Ganache based on brownie-config.yaml settings
     )
 
@@ -28,7 +28,7 @@ def deploy_contract():
         print(f"\nGanache Deployed {config['token']['name']} to address: {contract.address}")
 
     return contract
-
+    
 
 def get_account():
     """
@@ -42,5 +42,3 @@ def get_account():
 
 def main():
     deploy_contract()
-    # print('hello')
-    # print(config['token']['name'])
