@@ -1,5 +1,5 @@
 
-from brownie import accounts, convert, network, config, FundMePunks
+from brownie import accounts, convert, network, config, HappyPunks
 
 LOCAL_BLOCKCHAIN_ENVIRONMENTS = ["development", "ganache-local"]
 
@@ -7,18 +7,22 @@ LOCAL_BLOCKCHAIN_ENVIRONMENTS = ["development", "ganache-local"]
 def deploy_contract():
     """
     Deploys the contract according to the current network and veryfies the code ccordingly.
+    Builds the ipfs public and hidden paths.
     """
-    print('Deploying Contract...')
+    ipfs_image_metadata_cid = f"ipfs://{config['token']['ipfs_image_metadata_cid']}/"
+    ipfs_hidden_image_cid = f"ipfs://{config['token']['ipfs_hidden_image_cid']}/hidden.json"
+
+    print('Deploying Contract...\n')
     account = get_account()
-    print(account)
-    # print(config['TOKEN']['MAX_SUPPLY'])
-    contract = FundMePunks.deploy(
+    print('from: account', account, '\n')
+
+    contract = HappyPunks.deploy(
         config['token']['name'],
         config['token']['symbol'],
-        0.025, # The minimum donation value for the NFT
+        float(config['token']['mint_cost'])*10**18, # @dev The minimum donation value for the NFT
         config['token']['max_supply'],
-        config['token']['ipfs_image_metadata_cid'],
-        config['token']['ipfs_hidden_image_metadata_cid'],
+        ipfs_image_metadata_cid,
+        ipfs_hidden_image_cid,
         {"from": account}, publish_source=config["networks"][network.show_active()].get("verify")#will only verify outside of Ganache based on brownie-config.yaml settings
     )
 
@@ -42,5 +46,3 @@ def get_account():
 
 def main():
     deploy_contract()
-    # print('hello')
-    # print(config['token']['name'])
