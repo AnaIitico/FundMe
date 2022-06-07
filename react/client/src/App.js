@@ -27,7 +27,7 @@ function App() {
 	const [supplyAvailable, setSupplyAvailable] = useState(0)
 
 	const [account, setAccount] = useState(null)
-	const [donation, setDonation] = useState(null)
+	const [donation, setDonation] = useState('0')
 
 	const [networkId, setNetworkId] = useState(null)
 	const [ownerOf, setOwnerOf] = useState([])
@@ -172,14 +172,14 @@ function App() {
 			return
 		}
 
-		// Mint NFT
+		// Mint NFT 
 		if (contract && account) {
 			setIsMinting(true)
 			setIsError(false)
 
-            let _value = donation;
-			console.log(">>> VALUE:::", _value);
-			await contract.methods.mint(1).send({ from: account, value:_value*10**18 })
+			const _value = web3.utils.toWei(donation, 'ether');
+			// console.log(">>> VALUE:::", _value);
+			await contract.methods.mint(1).send({ from: account, value: _value })
 				.on('confirmation', async () => {
 					const maxSupply = await contract.methods.maxSupply().call()
 					const totalSupply = await contract.methods.totalSupply().call()
@@ -200,7 +200,7 @@ function App() {
 
 	const cycleImages = async () => {
 		const getRandomNumber = () => {
-			const counter = (Math.floor(Math.random() * 1000)) + 1
+			const counter = (Math.floor(Math.random() * 900)) + 1
 			setCounter(counter)
 		}
 
