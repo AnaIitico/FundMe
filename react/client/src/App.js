@@ -27,7 +27,8 @@ function App() {
 	const [supplyAvailable, setSupplyAvailable] = useState(0)
 
 	const [account, setAccount] = useState(null)
-	const [donation, setDonation] = useState(0)
+
+	const [donation, setDonation] = useState('0')
 
 	const [networkId, setNetworkId] = useState(null)
 	const [ownerOf, setOwnerOf] = useState([])
@@ -172,14 +173,20 @@ function App() {
 			return
 		}
 
-		// Mint NFT
+		// Mint NFT 
 		if (contract && account) {
 			setIsMinting(true)
 			setIsError(false)
 
+<<<<<<< HEAD
             let value = donation;
 			console.log(">>> VALUE:::", value);
 			await contract.methods.mint(1).send({ from: account, value: value * 10 ** 18 })
+=======
+			const _value = web3.utils.toWei(donation, 'ether');
+			// console.log(">>> VALUE:::", _value);
+			await contract.methods.mint(1).send({ from: account, value: _value })
+>>>>>>> main
 				.on('confirmation', async () => {
 					const maxSupply = await contract.methods.maxSupply().call()
 					const totalSupply = await contract.methods.totalSupply().call()
@@ -200,7 +207,7 @@ function App() {
 
 	const cycleImages = async () => {
 		const getRandomNumber = () => {
-			const counter = (Math.floor(Math.random() * 1000)) + 1
+			const counter = (Math.floor(Math.random() * 900)) + 1
 			setCounter(counter)
 		}
 
@@ -249,7 +256,7 @@ function App() {
 					<Row className='flex m-3'>
 						<Col md={5} lg={4} xl={5} xxl={4} className='text-center'>
 							<img
-								src={`https://gateway.pinata.cloud/ipfs/QmXojk54V9XWiQ8u2jEtE1jMfwjVXfSJ38qiebP3kHKoLr/${counter}.png`}
+								src={`https://gateway.pinata.cloud/ipfs/QmSNdf2PWDEuv5Ut2eq8WDgdxCudJTEruEyxwr5qwH5LoB/${counter}.png`}
 								alt="FundMe Punks"
 								className='showcase'
 							/>

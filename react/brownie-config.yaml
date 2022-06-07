@@ -10,10 +10,10 @@ token:
   name: ${NAME}
   symbol: ${SYMBOL}
   decimals: ${DECIMALS} 
-  mint_cost: ${MINT_COST} 
+  mint_cost: ${REACT_APP_MINT_COST} 
   max_supply: ${MAX_SUPPLY} 
-  ipfs_image_metadata_cid: ${IPFS_IMAGE_METADATA_CID} 
-  ipfs_hidden_image_metadata_cid: ${IPFS_HIDDEN_IMAGE_METADATA_CID} 
+  ipfs_image_metadata_cid: ${IPFS_IMAGE_METADATA_CID} # ipfs hash for image metadata
+  ipfs_hidden_image_data_cid: ${IPFS_HIDDEN_IMAGE_DATA_CID} # ipfs hash for the actual image
 dependencies:
   - OpenZeppelin/openzeppelin-contracts@2.5.0
   - OpenZeppelin/openzeppelin-contracts@4.4.1
