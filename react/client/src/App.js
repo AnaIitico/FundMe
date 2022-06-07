@@ -27,6 +27,8 @@ function App() {
 	const [supplyAvailable, setSupplyAvailable] = useState(0)
 
 	const [account, setAccount] = useState(null)
+	const [donation, setDonation] = useState(null)
+
 	const [networkId, setNetworkId] = useState(null)
 	const [ownerOf, setOwnerOf] = useState([])
 
@@ -175,7 +177,8 @@ function App() {
 			setIsMinting(true)
 			setIsError(false)
 
-            let value = 0;
+            let value = donation;
+			console.log(">>> VALUE:::", value);
 			await contract.methods.mint(1).send({ from: account, value: value })
 				.on('confirmation', async () => {
 					const maxSupply = await contract.methods.maxSupply().call()
@@ -281,10 +284,12 @@ function App() {
 										<li>Viewable on Opensea shortly after minting</li>
 									</ul>
 
-									{isMinting ? (
+									{isMinting ? (	
 										<Spinner animation="border" className='p-3 m-2' />
-									) : (
+									) : (<div>
+										Donation amount:&nbsp;<input style={{"width": "100px"}}className="input" onChange={e => { setDonation(e.currentTarget.value) }}/><br/>
 										<button onClick={mintNFTHandler} className='button mint-button mt-3'>Mint</button>
+										</div>
 									)}
 
 									{ownerOf.length > 0 &&
