@@ -18,7 +18,8 @@ import Navbar from './Navbar'
 import contract from './artifacts/contracts/FundMePunks.json'
 import config from './config.json'
 
-if(contract) console.log(contract);
+// For testing only
+// if(contract) console.log(contract);
 
 function App() {
 	const [web3, setWeb3] = useState(null)
@@ -58,6 +59,7 @@ function App() {
 				
 				contract_address = map[chain]["FundMePunks"][0]
 			} catch (e) {
+				alert(`Couldn't find any deployed contract "FundMePunks" on the chain "${chain}".`)
 				console.log(`Couldn't find any deployed contract "FundMePunks" on the chain "${chain}".`)
 				setIsError(true)
 				setMessage("Contract initiation could not find map.json");
@@ -67,21 +69,25 @@ function App() {
 			try {
 				contractArtifact = await import(`./artifacts/deployments/${chain}/${contract_address}.json`)
 			} catch (e) {
+				alert(`Failed to load contract artifact "./artifacts/deployments/${chain}/${contract_address}.json"`)
 				console.log(`Failed to load contract artifact "./artifacts/deployments/${chain}/${contract_address}.json"`)
 				setIsError(true)
 				setMessage("Contract initiation could not find artifact");
 				return;	
 			}
-			console.log(">> artifact:", contractArtifact);
+			// For Testing Only
+			// console.log(">> artifact:", contractArtifact);
 
 			const contract = new _web3.eth.Contract(contractArtifact.abi, contract_address)
 
-			console.log(">>> CONTRACT:::", contract);
+			// For Testing Only
+			// console.log(">>> CONTRACT:::", contract);
 			setContract(contract)
 
 			const maxSupply = await contract.methods.maxSupply().call()
 
-			console.log("MAx supply: ", maxSupply);
+			// For Testing Only
+			// console.log("MAx supply: ", maxSupply);
 
 			const totalSupply = await contract.methods.totalSupply().call()
 			setSupplyAvailable(maxSupply - totalSupply)
@@ -93,12 +99,14 @@ function App() {
 			if (_account) {
 				const ownerOf = await contract.methods.walletOfOwner(_account).call()
 				setOwnerOf(ownerOf)
-				console.log(ownerOf)
+				// For Testing Only
+				// console.log(ownerOf)
 			} else {
 				setOwnerOf([])
 			}
 
 		} catch (error) {
+			alert("loadBlockchainData error:", error);
 			console.log("loadBlockchainData error:", error);
 			setIsError(true)
 			setMessage("Contract not deployed to current network, please change network in MetaMask")
@@ -111,7 +119,8 @@ function App() {
 			setWeb3(web3)
 
 			const accounts = await web3.eth.getAccounts()
-			console.log(accounts)
+			// For Testing Only
+			// console.log(accounts)
 
 			if (accounts.length > 0) {
 				setAccount(accounts[0])
@@ -122,6 +131,7 @@ function App() {
 			const networkId = await web3.eth.net.getId()
             // <=42 to exclude Kovan, <42 to include kovan
             if (networkId < 2) {
+                alert("MainNet Is Not Supported!") 
                 console.log("MainNet Is Not Supported!") 
                 return
             } 
@@ -179,6 +189,7 @@ function App() {
 			setIsError(false)
 
 			const _value = web3.utils.toWei(donation, 'ether');
+			// For Testing Only
 			// console.log(">>> VALUE:::", _value);
 			await contract.methods.mint(1).send({ from: account, value: _value })
 				.on('confirmation', async () => {
@@ -191,7 +202,8 @@ function App() {
 				})
 				.on('error', (error) => {
 					window.alert(error)
-					console.log(">>> ERROR:::", error);
+					// For Testing Only
+			// console.log(">>> ERROR:::", error);
 					setIsError(true)
 				})
 		}
@@ -258,7 +270,8 @@ function App() {
 						<Col md={5} lg={4} xl={5} xxl={4}>
 							{revealTime !== 0 && <Countdown date={currentTime + (revealTime - currentTime)} className='countdown mx-3' />}
 							<p className='text'>
-								Not long before we launch the campaign!
+								We are a non-profit university that seeks to provide educational resources, opportunities, and support to marginalized communities throughout the U.S. and abroad. The donations provided through this FundMe Campaign will allow us to grant people from these marginalized communities the opportunity to learn and foster in their academic and professional endeavors. <br/><br/>
+								We accept ETHER FundMe donations and in return for your generous donations, we will gift you with an exclusive XX University FundMe Punks NFT. Thank you for helping us help others
 							</p>
 							<a href="#about" className='button mx-3'>Learn More!</a>
 						</Col>
