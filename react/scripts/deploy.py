@@ -9,8 +9,14 @@ def deploy_contract():
     Deploys the contract according to the current network and veryfies the code ccordingly.
     Builds the ipfs public and hidden paths.
     """
-    ipfs_image_metadata_cid = f"ipfs://{config['token']['ipfs_image_metadata_cid']}/"
-    ipfs_hidden_image_cid = f"ipfs://{config['token']['ipfs_hidden_image_cid']}/hidden.json"
+    ipfs_image_metadata_cid = ""
+    ipfs_hidden_image_cid = ""
+    if network.show_active() == 'dev':
+        ipfs_image_metadata_cid = config['token']['ipfs_image_metadata_cid']
+        ipfs_hidden_image_cid = config['token']['ipfs_hidden_image_cid']
+    if network.show_active() == 'rinkeby':
+        ipfs_image_metadata_cid = f"ipfs://{config['token']['ipfs_image_metadata_cid']}/"
+        ipfs_hidden_image_cid = f"ipfs://{config['token']['ipfs_hidden_image_cid']}/hidden.json"
 
     print('Deploying Contract...\n')
     account = get_account()
@@ -21,10 +27,8 @@ def deploy_contract():
         config['token']['symbol'],
         float(config['token']['mint_cost'])*10**18, # @dev The minimum donation value for the NFT
         config['token']['max_supply'],
-        config['token']['ipfs_image_metadata_cid'],
-        config['token']['ipfs_hidden_image_cid'],
-        # ipfs_image_metadata_cid,
-        # ipfs_hidden_image_cid,
+        ipfs_image_metadata_cid,
+        ipfs_hidden_image_cid,
         {"from": account}, publish_source=config["networks"][network.show_active()].get("verify")#will only verify outside of Ganache based on brownie-config.yaml settings
     )
 
