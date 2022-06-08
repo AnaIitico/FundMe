@@ -15,10 +15,11 @@ import './App.css'
 import Navbar from './Navbar'
 
 // Import ABI + Config
-import contract from './artifacts/contracts/FundMePunks.json'
+
+// import contract from './artifacts/contracts/FundMePunksNFT.json'// For Testing Only
 import config from './config.json'
 
-// For testing only
+// For Testing Only
 // if(contract) console.log(contract);
 
 function App() {
@@ -28,9 +29,8 @@ function App() {
 	const [supplyAvailable, setSupplyAvailable] = useState(0)
 
 	const [account, setAccount] = useState(null)
-
-	const [donation, setDonation] = useState('0')
-
+	const [donation, setDonation] = useState(null)
+	
 	const [networkId, setNetworkId] = useState(null)
 	const [ownerOf, setOwnerOf] = useState([])
 
@@ -50,17 +50,15 @@ function App() {
 	const loadBlockchainData = async (_web3, _account, _networkId) => {
 		// Fetch Contract, Data, etc.
 		try {
-			let chain = (_networkId === 1337) ? "dev" : _networkId;
+			let chain = (_networkId === 1337 || _networkId === 5777) ? "dev" : _networkId;
 			let contract_address;
 			let contractArtifact
 
 			try {
 				let map = await import(`./artifacts/deployments/map.json`)
-				
-				contract_address = map[chain]["FundMePunks"][0]
+				contract_address = map[chain]["FundMePunksNFT"][0]
 			} catch (e) {
-				alert(`Couldn't find any deployed contract "FundMePunks" on the chain "${chain}".`)
-				console.log(`Couldn't find any deployed contract "FundMePunks" on the chain "${chain}".`)
+				console.log(`Couldn't find any deployed contract "FundMePunksNFT" on the chain "${chain}".`)
 				setIsError(true)
 				setMessage("Contract initiation could not find map.json");
 				return;	
@@ -69,7 +67,6 @@ function App() {
 			try {
 				contractArtifact = await import(`./artifacts/deployments/${chain}/${contract_address}.json`)
 			} catch (e) {
-				alert(`Failed to load contract artifact "./artifacts/deployments/${chain}/${contract_address}.json"`)
 				console.log(`Failed to load contract artifact "./artifacts/deployments/${chain}/${contract_address}.json"`)
 				setIsError(true)
 				setMessage("Contract initiation could not find artifact");
@@ -106,7 +103,6 @@ function App() {
 			}
 
 		} catch (error) {
-			alert("loadBlockchainData error:", error);
 			console.log("loadBlockchainData error:", error);
 			setIsError(true)
 			setMessage("Contract not deployed to current network, please change network in MetaMask")
@@ -131,18 +127,21 @@ function App() {
 			const networkId = await web3.eth.net.getId()
             // <=42 to exclude Kovan, <42 to include kovan
             if (networkId < 2) {
-                alert("MainNet Is Not Supported!") 
                 console.log("MainNet Is Not Supported!") 
                 return
             } 
 			setNetworkId(networkId)
 
-			if (networkId !== 1337) {
-                let provider = new Web3.providers.HttpProvider(
-                    "http://127.0.0.1:8545"
-                );
-                web3 = new Web3(provider)
-                setWeb3(web3)
+			if (networkId !== 1337 || networkId !== 5777) {
+                // let provider = new Web3.providers.HttpProvider(
+                //     "http://127.0.0.1:8545"
+                // );
+                // web3 = new Web3(provider)
+                // setWeb3(web3)
+
+				// For Testing Only
+				// console.log('netid', config.NETWORKS[networkId])
+				
 				setExplorerURL(config.NETWORKS[networkId].explorerURL)
 				setOpenseaURL(config.NETWORKS[networkId].openseaURL)
 			}
@@ -163,6 +162,8 @@ function App() {
 		}
 	}
 
+	// ipfs://QmRwdCmXPnZFYanXJazcPxdj1a6HRDqc9t1oK6w2zyW8qS/
+	// QmRwdCmXPnZFYanXJazcPxdj1a6HRDqc9t1oK6w2zyW8qS
 	// MetaMask Login/Connect
 	const web3Handler = async () => {
 		if (web3) {
@@ -183,14 +184,13 @@ function App() {
 			return
 		}
 
-		// Mint NFT 
+		// Mint NFT
 		if (contract && account) {
 			setIsMinting(true)
 			setIsError(false)
 
-			const _value = web3.utils.toWei(donation, 'ether');
-			// For Testing Only
-			// console.log(">>> VALUE:::", _value);
+            let _value = web3.utils.toWei(donation, 'ether');
+			console.log(">>> VALUE:::", _value);
 			await contract.methods.mint(1).send({ from: account, value: _value })
 				.on('confirmation', async () => {
 					const maxSupply = await contract.methods.maxSupply().call()
@@ -202,8 +202,7 @@ function App() {
 				})
 				.on('error', (error) => {
 					window.alert(error)
-					// For Testing Only
-			// console.log(">>> ERROR:::", error);
+					console.log(">>> ERROR:::", error);
 					setIsError(true)
 				})
 		}
@@ -213,7 +212,7 @@ function App() {
 
 	const cycleImages = async () => {
 		const getRandomNumber = () => {
-			const counter = (Math.floor(Math.random() * 900)) + 1
+			const counter = (Math.floor(Math.random() * 800)) + 1
 			setCounter(counter)
 		}
 
@@ -234,7 +233,7 @@ function App() {
 
 					<Row className='header my-3 p-3 mb-0 pb-0'>
 						<Col xs={12} md={12} lg={8} xxl={8}>
-							<h1>FundMe Punks</h1>
+							<h1>Happy Punks</h1>
 							<p className='sub-header'>Availble on 07 / 13 / 22</p>
 						</Col>
 						<Col className='flex social-icons'>
@@ -263,15 +262,14 @@ function App() {
 						<Col md={5} lg={4} xl={5} xxl={4} className='text-center'>
 							<img
 								src={`https://gateway.pinata.cloud/ipfs/QmSNdf2PWDEuv5Ut2eq8WDgdxCudJTEruEyxwr5qwH5LoB/${counter}.png`}
-								alt="FundMe Punks"
+								alt="Happy Punks"
 								className='showcase'
 							/>
 						</Col>
 						<Col md={5} lg={4} xl={5} xxl={4}>
 							{revealTime !== 0 && <Countdown date={currentTime + (revealTime - currentTime)} className='countdown mx-3' />}
 							<p className='text'>
-								We are a non-profit university that seeks to provide educational resources, opportunities, and support to marginalized communities throughout the U.S. and abroad. The donations provided through this FundMe Campaign will allow us to grant people from these marginalized communities the opportunity to learn and foster in their academic and professional endeavors. <br/><br/>
-								We accept ETHER FundMe donations and in return for your generous donations, we will gift you with an exclusive XX University FundMe Punks NFT. Thank you for helping us help others
+								Not long before we launch the campaign!
 							</p>
 							<a href="#about" className='button mx-3'>Learn More!</a>
 						</Col>
@@ -301,8 +299,8 @@ function App() {
 									{isMinting ? (	
 										<Spinner animation="border" className='p-3 m-2' />
 									) : (<div>
-										Donation amount:&nbsp;<input style={{"width": "100px"}} className="input" placeholder='In Ether'  onChange={e => { setDonation(e.currentTarget.value) }}/><br/>
-										<button onClick={mintNFTHandler} className='button mint-button mt-3' disabled={donation == 0}>Mint</button>
+										Donation amount:&nbsp;<input style={{"width": "100px"}}className="input" onChange={e => { setDonation(e.currentTarget.value) }}/><br/>
+										<button onClick={mintNFTHandler} className='button mint-button mt-3'>Mint</button>
 										</div>
 									)}
 

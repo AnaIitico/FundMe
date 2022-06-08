@@ -2,7 +2,6 @@
 ## REACT: change the build directory to be within react's scope
 project_structure:
    build: client/src/artifacts
-
 # automatically fetch contract sources from Etherscan
 autofetch_sources: True
 dotenv: .env
@@ -14,9 +13,9 @@ token:
   max_supply: ${MAX_SUPPLY} 
   ipfs_image_metadata_cid: ${IPFS_IMAGE_METADATA_CID} 
   ipfs_hidden_image_cid: ${IPFS_HIDDEN_IMAGE_CID} 
-dependencies:
-  - OpenZeppelin/openzeppelin-contracts@2.5.0
-  - OpenZeppelin/openzeppelin-contracts@4.4.1
+# dependencies:
+#   - OpenZeppelin/openzeppelin-contracts@2.5.0
+#   - OpenZeppelin/openzeppelin-contracts@4.4.1
 # compiler:
 #     solc:
 #         remappings:

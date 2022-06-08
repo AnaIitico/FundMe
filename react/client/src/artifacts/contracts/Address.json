@@ -3969,7 +3969,6 @@
               "src": "8063:88:0",
               "text": " @dev Emitted when `tokenId` token is transferred from `from` to `to`."
             },
-            "eventSelector": "ddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
             "id": 335,
             "name": "Transfer",
             "nameLocation": "8162:8:0",
@@ -4077,7 +4076,6 @@
               "src": "8274:94:0",
               "text": " @dev Emitted when `owner` enables `approved` to manage the `tokenId` token."
             },
-            "eventSelector": "8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
             "id": 344,
             "name": "Approval",
             "nameLocation": "8379:8:0",
@@ -4185,7 +4183,6 @@
               "src": "8498:117:0",
               "text": " @dev Emitted when `owner` enables or disables (`approved`) `operator` to manage all of its assets."
             },
-            "eventSelector": "17307eab39ab6107e8899845ad3d59bd9653f200f220920489ca2b5937696c31",
             "id": 353,
             "name": "ApprovalForAll",
             "nameLocation": "8626:14:0",
@@ -13127,7 +13124,6 @@
         "nodeType": "ContractDefinition",
         "nodes": [
           {
-            "global": false,
             "id": 1061,
             "libraryName": {
               "id": 1059,
@@ -13151,7 +13147,6 @@
             }
           },
           {
-            "global": false,
             "id": 1064,
             "libraryName": {
               "id": 1062,
@@ -27544,7 +27539,6 @@
           },
           {
             "anonymous": false,
-            "eventSelector": "8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
             "id": 2203,
             "name": "OwnershipTransferred",
             "nameLocation": "49099:20:0",
@@ -28665,7 +28659,7 @@
     ],
     "src": "32:50673:0"
   },
-  "bytecode": "60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212203da709972acf356dd9546f4493fc9a5839d73eadd2acdd4ad63b155b3beed7aa64736f6c634300080e0033",
+  "bytecode": "60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212208537409ea89dce0f87f92c02b2975f9b942451d5b11424cfb78c1dd6b8e1567664736f6c634300080b0033",
   "bytecodeSha1": "1ce946f6a4eaa185320328620ccf999b9e86db7c",
   "compiler": {
     "evm_version": "istanbul",
@@ -28673,7 +28667,7 @@
       "enabled": true,
       "runs": 200
     },
-    "version": "0.8.14+commit.80d49f37"
+    "version": "0.8.11+commit.d7f03943"
   },
   "contractName": "Address",
   "coverageMap": {
@@ -28685,7 +28679,7 @@
     }
   },
   "dependencies": [],
-  "deployedBytecode": "73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212203da709972acf356dd9546f4493fc9a5839d73eadd2acdd4ad63b155b3beed7aa64736f6c634300080e0033",
+  "deployedBytecode": "73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212208537409ea89dce0f87f92c02b2975f9b942451d5b11424cfb78c1dd6b8e1567664736f6c634300080b0033",
   "deployedSourceMap": "16793:8159:0:-:0;;;;;;;;",
   "language": "Solidity",
   "natspec": {
@@ -28698,7 +28692,7 @@
     16793,
     24952
   ],
-  "opcodes": "PUSH20 0x0 ADDRESS EQ PUSH1 0x80 PUSH1 0x40 MSTORE PUSH1 0x0 DUP1 REVERT INVALID LOG2 PUSH5 0x6970667358 0x22 SLT KECCAK256 RETURNDATASIZE 0xA7 MULMOD SWAP8 0x2A 0xCF CALLDATALOAD PUSH14 0xD9546F4493FC9A5839D73EADD2AC 0xDD 0x4A 0xD6 EXTCODESIZE ISZERO JUMPDEST EXTCODESIZE 0xEE 0xD7 0xAA PUSH5 0x736F6C6343 STOP ADDMOD 0xE STOP CALLER ",
+  "opcodes": "PUSH20 0x0 ADDRESS EQ PUSH1 0x80 PUSH1 0x40 MSTORE PUSH1 0x0 DUP1 REVERT INVALID LOG2 PUSH5 0x6970667358 0x22 SLT KECCAK256 DUP6 CALLDATACOPY BLOCKHASH SWAP15 0xA8 SWAP14 0xCE 0xF DUP8 0xF9 0x2C MUL 0xB2 SWAP8 0x5F SWAP12 SWAP5 0x24 MLOAD 0xD5 0xB1 EQ 0x24 0xCF 0xB7 DUP13 SAR 0xD6 0xB8 0xE1 JUMP PUSH23 0x64736F6C634300080B0033000000000000000000000000 ",
   "pcMap": {
     "0": {
       "offset": [

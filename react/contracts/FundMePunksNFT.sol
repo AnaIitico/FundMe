@@ -4,7 +4,8 @@ pragma solidity >=0.7.0 <0.9.0;
 
 import "./ExternalIncludes.sol";
 
-contract FundMePunks is ERC721Enumerable, Ownable {
+contract FundMePunksNFT is ERC721Enumerable, Ownable {
+    using SafeMath for uint256;
     using Strings for uint256;
 
     string baseURI;
