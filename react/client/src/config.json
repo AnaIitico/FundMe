@@ -1,6 +1,6 @@
 
 {
-    "PROJECT_NAME": "fundMe-punks-nft",
+    "PROJECT_NAME": "fundme-punks-nft",
     "NETWORKS": {
         "1": {
             "name": "Ethereum Mainnet",
