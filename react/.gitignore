@@ -30,4 +30,6 @@ __pycache__
 build/
 reports/
 
+netlify.txt
+
 

@@ -31,4 +31,7 @@ build/
 reports/
 
 react/client/node_modules
-react/client/src/artifacts
+# Local Netlify folder
+.netlify
+
+netlify.txt
