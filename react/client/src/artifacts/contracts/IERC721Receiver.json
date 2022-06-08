@@ -4004,7 +4004,6 @@
               "src": "8063:88:0",
               "text": " @dev Emitted when `tokenId` token is transferred from `from` to `to`."
             },
-            "eventSelector": "ddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
             "id": 335,
             "name": "Transfer",
             "nameLocation": "8162:8:0",
@@ -4112,7 +4111,6 @@
               "src": "8274:94:0",
               "text": " @dev Emitted when `owner` enables `approved` to manage the `tokenId` token."
             },
-            "eventSelector": "8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
             "id": 344,
             "name": "Approval",
             "nameLocation": "8379:8:0",
@@ -4220,7 +4218,6 @@
               "src": "8498:117:0",
               "text": " @dev Emitted when `owner` enables or disables (`approved`) `operator` to manage all of its assets."
             },
-            "eventSelector": "17307eab39ab6107e8899845ad3d59bd9653f200f220920489ca2b5937696c31",
             "id": 353,
             "name": "ApprovalForAll",
             "nameLocation": "8626:14:0",
@@ -13162,7 +13159,6 @@
         "nodeType": "ContractDefinition",
         "nodes": [
           {
-            "global": false,
             "id": 1061,
             "libraryName": {
               "id": 1059,
@@ -13186,7 +13182,6 @@
             }
           },
           {
-            "global": false,
             "id": 1064,
             "libraryName": {
               "id": 1062,
@@ -27579,7 +27574,6 @@
           },
           {
             "anonymous": false,
-            "eventSelector": "8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
             "id": 2203,
             "name": "OwnershipTransferred",
             "nameLocation": "49099:20:0",
@@ -28708,7 +28702,7 @@
       "enabled": true,
       "runs": 200
     },
-    "version": "0.8.14+commit.80d49f37"
+    "version": "0.8.11+commit.d7f03943"
   },
   "contractName": "IERC721Receiver",
   "coverageMap": {

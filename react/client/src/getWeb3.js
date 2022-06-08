@@ -16,6 +16,6 @@ export const getWeb3 = async () => {
         );
         web3 = new Web3(provider)
     }
-
+    // console.log(web3);
     return web3
 }

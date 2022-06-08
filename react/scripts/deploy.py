@@ -1,5 +1,5 @@
 
-from brownie import accounts, convert, network, config, FundMePunks
+from brownie import accounts, convert, network, config, FundMePunksNFT
 
 LOCAL_BLOCKCHAIN_ENVIRONMENTS = ["development", "ganache-local"]
 
@@ -11,25 +11,27 @@ def deploy_contract():
     """
     ipfs_image_metadata_cid = ""
     ipfs_hidden_image_cid = ""
-    if network.show_active() == 'dev':
+    if network.show_active() == 'development':
         ipfs_image_metadata_cid = config['token']['ipfs_image_metadata_cid']
         ipfs_hidden_image_cid = config['token']['ipfs_hidden_image_cid']
     if network.show_active() == 'rinkeby':
         ipfs_image_metadata_cid = f"ipfs://{config['token']['ipfs_image_metadata_cid']}/"
         ipfs_hidden_image_cid = f"ipfs://{config['token']['ipfs_hidden_image_cid']}/hidden.json"
-
     print('Deploying Contract...\n')
+    # print('line 21', network.show_active()) # @dev for testing only
+    # print('line 22', ipfs_image_metadata_cid) # @dev for testing only
+    print(ipfs_hidden_image_cid)
     account = get_account()
     print('from: account', account, '\n')
 
-    contract = FundMePunks.deploy(
+    contract = FundMePunksNFT.deploy(
         config['token']['name'],
         config['token']['symbol'],
-        float(config['token']['mint_cost'])*10**18, # @dev The minimum donation value for the NFT
+        float(config['token']['mint_cost'])*10**18, # @dev The minimum donation value for the NFT converted to wei value
         config['token']['max_supply'],
         ipfs_image_metadata_cid,
         ipfs_hidden_image_cid,
-        {"from": account}, publish_source=config["networks"][network.show_active()].get("verify")#will only verify outside of Ganache based on brownie-config.yaml settings
+        {"from": account}, publish_source=config["networks"][network.show_active()].get("verify")# @dev will only verify outside of Ganache based on brownie-config.yaml settings
     )
 
     if network.show_active() == 'rinkeby':
