@@ -312,8 +312,8 @@ function App() {
 								<p>Error: {message}</p>
 							) : (
 								<div>
-									<h3>Donate & Mint your NFT in</h3>
-									{revealTime !== 0 && <Countdown date={currentTime + (revealTime - currentTime)} className='countdown' />}
+									<h3>Donate & Mint your NFT</h3>
+									{/* {revealTime !== 0 && <Countdown date={currentTime + (revealTime - currentTime)} className='countdown' />} */}
 									<ul>
 										<li>1,000 generated punked out images using an art generator</li>
 										<li>Donation minting on Rinkeby testnet (min 0.025 ETH)</li>
