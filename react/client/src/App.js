@@ -1,23 +1,24 @@
 
-import React, { useState, useEffect } from 'react'
-import { Row, Col, Spinner } from 'react-bootstrap'
-import Countdown from 'react-countdown'
-import Web3 from 'web3'
+import React, { useState, useEffect } from 'react';
+import { Row, Col, Spinner } from 'react-bootstrap';
+import Countdown from 'react-countdown';
+import Web3 from 'web3';
+import abi from "./artifacts/deployments/4/0x837feE9f996c70bd6066b9f64BEe3d38952C9fE2.json";
 
 // Import Images + CSS
-import twitter from './images/socials/twitter.svg'
-import instagram from './images/socials/instagram.svg'
-import opensea from './images/socials/opensea.svg'
-import showcase from './images/showcase.png'
-import './App.css'
+import twitter from './images/socials/twitter.svg';
+import instagram from './images/socials/instagram.svg';
+import opensea from './images/socials/opensea.svg';
+import showcase from './images/showcase.png';
+import './App.css';
 
 // Import Components
-import Navbar from './Navbar'
+import Navbar from './Navbar';
 
 // Import ABI + Config
 
 // import contract from './artifacts/contracts/FundMePunksNFT.json'// For Testing Only
-import config from './config.json'
+import config from './config.json';
 
 // For Testing Only
 // if(contract) console.log(contract);
@@ -55,9 +56,17 @@ function App() {
 			let contractArtifact
 
 			try {
-				let map = await import(`./artifacts/deployments/map.json`)
-				contract_address = map[chain]["FundMePunksNFT"][0]
+				if(_networkId === 1337 || _networkId === 5777){
+					// Comment out the below lines for production deployment
+					// let map = await import(`./artifacts/deployments/map.json`)
+					// contract_address = map[chain]["FundMePunksNFT"][0]
+				}else{
+					// For TestNet and Production Paste last deployed contract address
+					contract_address = '0x837feE9f996c70bd6066b9f64BEe3d38952C9fE2'
+				}
+				
 			} catch (e) {
+				alert(`Couldn't find any deployed contract "FundMePunksNFT" on the chain "${chain}".`)
 				console.log(`Couldn't find any deployed contract "FundMePunksNFT" on the chain "${chain}".`)
 				setIsError(true)
 				setMessage("Contract initiation could not find map.json");
@@ -65,8 +74,16 @@ function App() {
 			}
 
 			try {
-				contractArtifact = await import(`./artifacts/deployments/${chain}/${contract_address}.json`)
+				if(_networkId === 1337 || _networkId === 5777){
+					// Comment out the below line for production deployment
+					// contractArtifact = await import(`./artifacts/deployments/${chain}/${contract_address}.json`);
+				}else{
+					// Paste deployed contract address
+					contractArtifact = abi;
+				}
+				
 			} catch (e) {
+				alert(`Failed to load contract artifact "./artifacts/deployments/${chain}/${contract_address}.json"`)
 				console.log(`Failed to load contract artifact "./artifacts/deployments/${chain}/${contract_address}.json"`)
 				setIsError(true)
 				setMessage("Contract initiation could not find artifact");
@@ -103,6 +120,7 @@ function App() {
 			}
 
 		} catch (error) {
+			alert("loadBlockchainData error:", error);
 			console.log("loadBlockchainData error:", error);
 			setIsError(true)
 			setMessage("Contract not deployed to current network, please change network in MetaMask")
@@ -127,6 +145,7 @@ function App() {
 			const networkId = await web3.eth.net.getId()
             // <=42 to exclude Kovan, <42 to include kovan
             if (networkId < 2) {
+                alert("MainNet Is Not Supported!") 
                 console.log("MainNet Is Not Supported!") 
                 return
             } 
@@ -190,7 +209,10 @@ function App() {
 			setIsError(false)
 
             let _value = web3.utils.toWei(donation, 'ether');
-			console.log(">>> VALUE:::", _value);
+
+			// For Testing Only
+			// console.log(">>> VALUE:::", _value);
+
 			await contract.methods.mint(1).send({ from: account, value: _value })
 				.on('confirmation', async () => {
 					const maxSupply = await contract.methods.maxSupply().call()
