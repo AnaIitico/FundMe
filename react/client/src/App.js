@@ -256,7 +256,7 @@ function App() {
 					<Row className='header my-3 p-3 mb-0 pb-0'>
 						<Col xs={12} md={12} lg={8} xxl={8}>
 							<h1>Happy Punks</h1>
-							<p className='sub-header'>Availble on 07 / 13 / 22</p>
+							<p className='sub-header'>Availble on 06 / 8 / 22</p>
 						</Col>
 						<Col className='flex social-icons'>
 							<a
@@ -291,7 +291,9 @@ function App() {
 						<Col md={5} lg={4} xl={5} xxl={4}>
 							{revealTime !== 0 && <Countdown date={currentTime + (revealTime - currentTime)} className='countdown mx-3' />}
 							<p className='text'>
-								Not long before we launch the campaign!
+								We are a non-profit organization that provides educational resources, opportunities, and support to marginalized communities throughout the U.S. The donations from the FundMe Campaign will allow us to help people from these marginalized communities the opportunity realize their academic and professional dreams.
+								<br/><br/>
+								This application accepts ETHER donations and in return we will gift you with an exclusive DeFi University FundMe Punks NFT. Thank you for helping us help others!
 							</p>
 							<a href="#about" className='button mx-3'>Learn More!</a>
 						</Col>
