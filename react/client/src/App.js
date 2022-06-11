@@ -61,6 +61,7 @@ function App() {
 					// let map = await import(`./artifacts/deployments/map.json`)
 					// contract_address = map[chain]["FundMePunksNFT"][0]
 				}else{
+					// For Ganache Uncomment the contract_address
 					// For TestNet and Production Paste last deployed contract address
 					contract_address = '0x837feE9f996c70bd6066b9f64BEe3d38952C9fE2'
 				}
