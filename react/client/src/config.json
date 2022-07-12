@@ -31,6 +31,12 @@
             "isTestnet": true,
             "explorerURL": null,
             "openseaURL": null
+        },
+        "5777": {
+            "name": "Localhost",
+            "isTestnet": true,
+            "explorerURL": null,
+            "openseaURL": null
         }
     }
 }

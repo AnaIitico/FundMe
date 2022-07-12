@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Spinner } from 'react-bootstrap';
+import { Row, Col, Spinner, Button } from 'react-bootstrap';
 import Countdown from 'react-countdown';
 import Web3 from 'web3';
 import abi from "./artifacts/deployments/4/0x837feE9f996c70bd6066b9f64BEe3d38952C9fE2.json";
@@ -16,7 +16,6 @@ import './App.css';
 import Navbar from './Navbar';
 
 // Import ABI + Config
-
 // import contract from './artifacts/contracts/FundMePunksNFT.json'// For Testing Only
 import config from './config.json';
 
@@ -31,6 +30,7 @@ function App() {
 
 	const [account, setAccount] = useState(null)
 	const [donation, setDonation] = useState(null)
+	const [donationStatus, setDonationStatus] = useState(true)
 	
 	const [networkId, setNetworkId] = useState(null)
 	const [ownerOf, setOwnerOf] = useState([])
@@ -47,6 +47,8 @@ function App() {
 
 	const [counter, setCounter] = useState(7)
 	const [isCycling, setIsCycling] = useState(false)
+
+	const minDonation = 0.025;
 
 	const loadBlockchainData = async (_web3, _account, _networkId) => {
 		// Fetch Contract, Data, etc.
@@ -79,7 +81,6 @@ function App() {
 					// Comment out the below line for production deployment
 					// contractArtifact = await import(`./artifacts/deployments/${chain}/${contract_address}.json`);
 				}else{
-					// Paste deployed contract address
 					contractArtifact = abi;
 				}
 				
@@ -106,10 +107,6 @@ function App() {
 
 			const totalSupply = await contract.methods.totalSupply().call()
 			setSupplyAvailable(maxSupply - totalSupply)
-
-			// const allowMintingAfter = await contract.methods.allowMintingAfter().call()
-			// const timeDeployed = await contract.methods.timeDeployed().call()
-			// setRevealTime((Number(timeDeployed) + Number(allowMintingAfter)).toString() + '000')
 
 			if (_account) {
 				const ownerOf = await contract.methods.walletOfOwner(_account).call()
@@ -153,12 +150,7 @@ function App() {
 			setNetworkId(networkId)
 
 			if (networkId !== 1337 || networkId !== 5777) {
-                // let provider = new Web3.providers.HttpProvider(
-                //     "http://127.0.0.1:8545"
-                // );
-                // web3 = new Web3(provider)
-                // setWeb3(web3)
-
+                
 				// For Testing Only
 				// console.log('netid', config.NETWORKS[networkId])
 				
@@ -182,8 +174,6 @@ function App() {
 		}
 	}
 
-	// ipfs://QmRwdCmXPnZFYanXJazcPxdj1a6HRDqc9t1oK6w2zyW8qS/
-	// QmRwdCmXPnZFYanXJazcPxdj1a6HRDqc9t1oK6w2zyW8qS
 	// MetaMask Login/Connect
 	const web3Handler = async () => {
 		if (web3) {
@@ -193,14 +183,9 @@ function App() {
 	}
 
 	const mintNFTHandler = async () => {
-	// 	if (revealTime > new Date().getTime()) {
-	// 		window.alert('Minting is not live yet!')
-	// 		return
-	// 	}
-
 
 		if (ownerOf.length > 150) {
-			window.alert("You've reached the max of 150 NFT's.\Thank you for your Donations!")
+			window.alert("You've reached the max of 150 NFT's.\nThank you for your Donations!")
 			return
 		}
 
@@ -246,7 +231,9 @@ function App() {
 	useEffect(() => {
 		loadWeb3()
 		cycleImages()
-	}, [account]);
+		if(donation >= minDonation) setDonationStatus(false);
+		// console.log(donationStatus);// For Testing Only
+	}, [account, donation, donationStatus]);
 
 	return (
 		<div>
@@ -263,18 +250,21 @@ function App() {
 							<a
 								href="https://twitter.com"
 								target='_blank'
+								rel="noopener noreferrer"
 								className='circle flex button'>
 								<img src={twitter} alt="Twitter" />
 							</a>
 							<a
 								href="https://instagram.com"
 								target='_blank'
+								rel="noopener noreferrer"
 								className='circle flex button'>
 								<img src={instagram} alt="Instagram" />
 							</a>
 							<a
 								href={`${openseaURL}/collection/${config.PROJECT_NAME}`}
 								target='_blank'
+								rel="noopener noreferrer"
 								className='circle flex button'>
 								<img src={opensea} alt="Opensea" />
 							</a>
@@ -314,18 +304,27 @@ function App() {
 							) : (
 								<div>
 									<h3>Donate & Mint your NFT</h3>
-									{/* {revealTime !== 0 && <Countdown date={currentTime + (revealTime - currentTime)} className='countdown' />} */}
+									
 									<ul>
 										<li>1,000 generated punked out images using an art generator</li>
-										<li>Donation minting on Rinkeby testnet (min 0.025 ETH)</li>
+										<li>Donation minting on Rinkeby testnet (min {minDonation} ETH)</li>
 										<li>Viewable on Opensea shortly after minting</li>
 									</ul>
 
 									{isMinting ? (	
 										<Spinner animation="border" className='p-3 m-2' />
 									) : (<div>
-										Donation amount:&nbsp;<input style={{"width": "100px"}}className="input" onChange={e => { setDonation(e.currentTarget.value) }}/><br/>
-										<button onClick={mintNFTHandler} className='button mint-button mt-3'>Mint</button>
+											Donation amount:&nbsp;<input style={{"width": "100px"}}className="input"
+											placeholder={minDonation}
+											onChange={(e)=>{ setDonation(e.currentTarget.value) }}/>
+											<br/>
+											<Button
+												disabled={donationStatus}
+												onClick={mintNFTHandler}
+												className='button mint-button mt-3'
+											>
+												Mint
+											</Button>
 										</div>
 									)}
 
@@ -334,6 +333,7 @@ function App() {
 											<a
 												href={`${openseaURL}/assets/${contract._address}/${ownerOf[0]}`}
 												target='_blank'
+												rel="noopener noreferrer"
 												style={{ display: 'inline-block', marginLeft: '3px' }}>
 												OpenSea
 											</a>
@@ -349,6 +349,7 @@ function App() {
 								<a
 									href={`${explorerURL}/address/${contract._address}`}
 									target='_blank'
+									rel="noopener noreferrer"
 									className='text-center'>
 									{contract._address}
 								</a>
