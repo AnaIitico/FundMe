@@ -311,11 +311,11 @@ function App() {
 										<li>Viewable on Opensea shortly after minting</li>
 									</ul>
 
-									{isMinting ? (	
+									{isMinting ? 	
 										<Spinner animation="border" className='p-3 m-2' />
-									) : (<div>
+									 : <div>
 											Donation amount:&nbsp;<input style={{"width": "100px"}}className="input"
-											placeholder={minDonation}
+											placeholder={`min ${minDonation}`}
 											onChange={(e)=>{ setDonation(e.currentTarget.value) }}/>
 											<br/>
 											<Button
@@ -326,7 +326,7 @@ function App() {
 												Mint
 											</Button>
 										</div>
-									)}
+									}
 
 									{ownerOf.length > 0 &&
 										<p><small>View your NFT on
