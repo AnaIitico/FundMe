@@ -232,7 +232,7 @@ function App() {
 		loadWeb3()
 		cycleImages()
 		if(donation >= minDonation) setDonationStatus(false);
-		else setDonationStatus(true);
+		if(donation < minDonation) setDonationStatus(true);
 		// console.log(donationStatus);// For Testing Only
 	}, [account, donation, donationStatus]);
 
